@@ -69,10 +69,14 @@
     </div>
     <div class="search-box">
       <div class="mid"><a href="/" class="midLink"><i class="fas fa-chevron-left"></i>&nbsp&nbspBack to Home</a></div>
+      {% if weather %}
       <div>{{weather.city}}</div>
       <div>{{weather.temprature}}</div>
       <div class="mid">{{weather.description}}</div>
       <div><img src="http://openweathermap.org/img/w/{{weather.icon}}.png" height="10%" width="65%"></div>
+      {% else %}
+      <div>City not found. Please try again later.</div>
+      {% endif %}
     </div>
   </body>
 </html>

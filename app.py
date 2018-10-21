@@ -14,8 +14,8 @@ def initial_view():
         url = 'http://api.openweathermap.org/data/2.5/weather?units=metric&APPID=594c7aab9fffecc844145f06d31f8c91&q={}'
         loc_json = requests.get(url.format(search_element)).json()
         ts = time.time()
-        if(ts>=loc_json['sys']['sunrise'] and ts<=loc_json['sys']['sunset']):
-            if(loc_json['cod']==200):
+        if(loc_json['cod']==200):
+            if(ts>=loc_json['sys']['sunrise'] and ts<=loc_json['sys']['sunset']):
                 weather = {
                     'city' : loc_json['name'],
                     'temprature' : loc_json['main']['temp'],
@@ -24,15 +24,6 @@ def initial_view():
                 }
                 return render_template('search.html',weather=weather,background='daylight.jpg',theme='Theme: Daylight',fontDiv='white',colorDiv='rgba(0,0,0,0.6)')
             else:
-                weather={
-                'city' : "City could not be located. Please try again.",
-                'temprature' : '',
-                'description' : '',
-                'icon' : '',
-                }
-                return render_template('search.html',background='initial.jpg',theme='Theme: Default',fontDiv='white',colorDiv='rgba(0,0,0,0.6)')
-        else:
-            if(loc_json['cod']==200):
                 weather = {
                     'city' : loc_json['name'],
                     'temprature' : loc_json['main']['temp'],
@@ -40,14 +31,14 @@ def initial_view():
                     'icon' : loc_json['weather'][0]['icon']
                 }
                 return render_template('search.html',weather=weather,background='night.jpg',theme='Theme: Nightfall',colorDiv='rgba(255,255,255,0.7)',fontDiv='black')
-            else:
-                weather={
+        else:
+            weather={
                 'city' : "City could not be located. Please try again.",
                 'temprature' : '',
                 'description' : '',
                 'icon' : '',
-                }
-                return render_template('search.html',background='initial.jpg',theme='Theme is set to Default',fontDiv='white',colorDiv='rgba(0,0,0,0.6)')
+            }
+            return render_template('search.html',background='initial.jpg',theme='Theme is set to Default',fontDiv='white',colorDiv='rgba(0,0,0,0.6)')
 
 if __name__ == '__main__':
     app.debug = True

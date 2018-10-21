@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>Welcome to Weather Web</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+      body{
+        background-image: url({{ url_for('static',filename = background)}});
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      h1{
+        display: inline;
+      }
+      ul{
+        display:inline;
+        list-style-type:none;
+      }
+      li{
+        display:inline;
+        padding-right:20px;
+      }
+      .navLog{
+        float:right;
+        padding:5 20 0 0;
+      }
+      .navLogin{
+        float:right;
+        padding:5 10 0 0;
+      }
+      .navDiv{
+        color:{{fontDiv}};
+        background-color: {{colorDiv}};
+        padding: 10 20px;
+        border-radius: 40px;
+      }
+      .search-box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        background: {{colorDiv}};
+        color:{{fontDiv}};
+        height: auto;
+        padding: 50px;
+        border-radius: 20px;
+      }
+      .navLink{
+        text-decoration: none;
+        color: {{fontDiv}};
+      }
+      .midLink{
+        text-decoration: none;
+        color: inherit;
+      }
+      .mid{
+        padding-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navDiv">
+      <nav>
+        <span><h1>Weather Web</h1></span>
+        <span class="navLogin"><a href = "login.html" class="navLink">{{username}}</a></span>
+        <span class="navLog">{{theme}}</span>
+        <span class="navLog"><a href = "initial.html?loc=true" class="navLink">Your Location</a></span>
+      </nav>
+    </div>
+    <div class="search-box">
+      <div class="mid"><a href="/" class="midLink"><i class="fas fa-chevron-left"></i>&nbsp&nbspBack to Home</a></div>
+      <div>{{weather.city}}</div>
+      <div>{{weather.temprature}}</div>
+      <div class="mid">{{weather.description}}</div>
+      <div><img src="http://openweathermap.org/img/w/{{weather.icon}}.png" height="10%" width="65%"></div>
+    </div>
+  </body>
+</html>

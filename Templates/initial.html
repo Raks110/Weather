@@ -101,6 +101,9 @@
           float: right;
           display: block;
         }
+        .navDiv span{
+          padding-top: 10px;
+        }
         .search-txt{
           padding: 0 6px;
           width: 240px;
@@ -130,6 +133,7 @@
         }
         .navDiv.responsive{
           border-radius: 10px;
+          z-index: 100;
         }
       }
     </style>
@@ -150,7 +154,7 @@
     <div class="navDiv" id="topnav">
       <nav>
         <span><h2>Weather Web</h2></span>
-        {% if login %}<span class="navLogin"><a href = "/login" class="navLink">Login</a></span>
+        {% if login %}<span class="navLogin" style="padding-top: 20px"><a href = "/login" class="navLink">Login</a></span>
         {% else %}<span class="navLogin"><a href="/" class="navLink">Back</a></span>
         {% endif %}
         <span class="navLog">{{theme}}</span>

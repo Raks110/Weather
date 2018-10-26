@@ -1,0 +1,213 @@
+<!--
+
+Placeholders:
+  1. background
+  2. fontDiv
+  3. colorDiv
+  4. theme
+  5. city
+
+-->
+
+<html>
+  <head>
+    <title>Welcome to Weather Web</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body{
+        background-image: url({{ url_for( 'static',filename = background)}});
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      input[type="submit"],a{
+        cursor: pointer;
+      }
+      h1{
+        display: inline;
+      }
+      ul{
+        display:inline;
+        list-style-type:none;
+      }
+      li{
+        display:inline;
+        padding-right:20px;
+      }
+      .navLog{
+        float:right;
+        padding:5 20 0 0;
+      }
+      .navDiv{
+        overflow: hidden;
+        color:{{fontDiv}};
+        background-color: {{colorDiv}};
+        padding: 10 20px;
+        border-radius: 40px;
+      }
+      .navDiv .icon {
+        display: none;
+      }
+      .search-box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        background: {{colorDiv}};
+        color:{{fontDiv}};
+        height: auto;
+        padding: 50px;
+        border-radius: 20px;
+      }
+      .navLink{
+        text-decoration: none;
+        color: {{fontDiv}};
+      }
+      .midLink{
+        text-decoration: none;
+        color: inherit;
+      }
+      .mid{
+        padding-bottom: 20px;
+      }
+      td{
+        padding-right: 10;
+        color: {{fontDiv}}
+      }
+      input[type="text"],input[type="password"]{
+        padding:10px;
+        border:0;
+        border-radius: 40px;
+        background-color: #0097e6;
+        color: #192a56;
+        transition-duration: 0.6s;
+      }
+      input[type="text"]:focus,input[type="password"]:focus{
+        background-color: #192a56;
+        color: #0097e6;
+      }
+      input[type="submit"]{
+        background-color: #0097e6;
+        color: #192a56;
+        width: 100%;
+        border: 0;
+        border-radius: 40px;
+        padding: 10px;
+        transition-duration: 0.6s;
+      }
+      input[type="text"]:hover,input[type="password"]:hover{
+        background-color: #192a56;
+        color: #0097e6;
+      }
+      input[type="submit"]:hover{
+        background-color: #192a56;
+        color: #0097e6;
+      }
+      ::placeholder{
+        color: #192a56;
+      }
+      .errors{
+        text-align: center;
+        margin: 0 auto;
+        top:90%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        color:{{fontDiv}};
+        background-color: {{colorDiv}};
+        position:absolute;
+        padding: 10 20px;
+        border-radius: 40px;
+      }
+      @media screen and (max-width: 600px) {
+        .navDiv span:not(:first-child) {
+          display: none;
+        }
+        .navDiv a.icon {
+          float: right;
+          display: block;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        .navDiv.responsive {
+          position: relative;
+        }
+        .navDiv.responsive a.icon {
+          position: absolute;
+          right: 20;
+          top: 10;
+        }
+        .navDiv.responsive span {
+          float: none;
+          display: block;
+          text-align: left;
+        }
+        .navDiv.responsive{
+          border-radius: 10px;
+        }
+      }
+    </style>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("topnav");
+        if (x.className === "navDiv") {
+            x.className += " responsive";
+        }
+        else {
+            x.className = "navDiv";
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <div class="navDiv" id="topnav">
+      <nav>
+        <span><h1>Weather Web</h1></span>
+        <span class="navLog">{{theme}}</span>
+        <span class="navLog">
+          {% if city %}
+            <a href = "/loc" class="navLink">{{city}}</a>
+          {% endif %}
+            <a href="/" class="navLink"><i class="fas fa-chevron-left"></i>&nbsp&nbspBack to Home</a>
+        </span>
+        <a href="javascript:void(0);" class="icon" style="color:inherit" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </nav>
+    </div>
+    <div class="search-box">
+      <div class="mid"><a href="/" class="midLink">Logging into Weather Web</a></div>
+      <form method='post'>
+        <table border="0">
+          <tr>
+            <td>Username: </td>
+            <td><input type="text" name="username" placeholder="Username"></input></td>
+          </tr>
+          <tr>
+            <td>Password: </td>
+            <td><input type="password" name="pass" placeholder="Password"></input></td>
+          </tr>
+          <tr>
+            <td>Confirm Password: </td>
+            <td><input type="password" name="conf_pass" placeholder="Confirm Password"></input></td>
+          </tr>
+          <tr>
+            <td>Home: </td>
+            <td><input type="text" name="home" value="{{hometown}}"></input></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="submit" name="submit" value="Register"></input></td>
+          </tr>
+        </table>
+        <p>
+          <a href="/login" style="text-decoration:none;color:inherit">Already a member of Weather Web? Login here.</a>
+        </p>
+    </div>
+    <div class="errors">
+      {% if message %}
+        {{message.error}}
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<html>
+  <head>
+    <title>Welcome to Weather Web</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body{
+        background-image: url({{ url_for('static',filename = background)}});
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      input[type="submit"],a{
+        cursor: pointer;
+      }
+      h1{
+        display: inline;
+      }
+      ul{
+        display:inline;
+        list-style-type:none;
+      }
+      li{
+        display:inline;
+        padding-right:20px;
+      }
+      .navLog{
+        float:right;
+        padding:5 20 0 0;
+      }
+      .navLogin{
+        float:right;
+        padding:5 10 0 0;
+      }
+      .navDiv{
+        overflow: hidden;
+        color:{{fontDiv}};
+        background-color: {{colorDiv}};
+        padding: 10 20px;
+        border-radius: 40px;
+      }
+      .navDiv .icon {
+        display: none;
+      }
+      .botDiv{
+        text-align: center;
+        margin: 0 auto;
+        top:90%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        color:{{fontDiv}};
+        background-color: {{colorDiv}};
+        position:absolute;
+        padding: 10 20px;
+        border-radius: 40px;
+      }
+      .search-box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        background: {{colorDiv}};
+        color:{{fontDiv}};
+        height: auto;
+        padding: 50px;
+        border-radius: 20px;
+      }
+      .navLink{
+        text-decoration: none;
+        color: {{fontDiv}};
+      }
+      .midLink{
+        text-decoration: none;
+        color: inherit;
+      }
+      .mid{
+        padding-bottom: 20px;
+      }
+      input[type="submit"]{
+        background-color: inherit;
+        color: inherit;
+        border: 0;
+      }
+      .spanCity{
+        padding-right: 10px;
+      }
+
+      @media screen and (max-width: 600px) {
+        .spanCity{
+          display: block;
+        }
+        .spanCityB{
+          display: none;
+        }
+        .botDiv{
+          border-radius: 10px;
+        }
+        .navDiv span:not(:first-child) {
+          display: none;
+        }
+        .navDiv a.icon {
+          float: right;
+          display: block;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        .spanCity{
+          display: block;
+        }
+        .spanCityB{
+          display: none;
+        }
+        .botDiv{
+          border-radius: 10px;
+        }
+        .navDiv.responsive {
+          position: relative;
+        }
+        .navDiv.responsive a.icon {
+          position: absolute;
+          right: 20;
+          top: 10;
+        }
+        .navDiv.responsive span {
+          float: none;
+          display: block;
+          text-align: left;
+        }
+        .navDiv.responsive{
+          border-radius: 10px;
+        }
+      }
+    </style>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("topnav");
+        if (x.className === "navDiv") {
+            x.className += " responsive";
+        }
+        else {
+            x.className = "navDiv";
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <div class="navDiv" id="topnav">
+      <nav>
+        <span>
+          <h1><a href="/" style="text-decoration: none;color:{{fontDiv}}">{% if user %}Hello {{user}}{% else %}Weather Web{% endif %}</a></h1>
+        </span>
+          {% if city %}
+            <span class="navLog"><a href = "/loc" class="navLink">{{city}}</a></span>
+          {% elif user %}
+            <span class="navLog"><form method="post"><input type = "submit" value="Logout" name="logout"></input></form></span>
+          {% else %}
+            <span class="navLog"><a href = "/" class="navLink">Back</a></span>
+          {% endif %}
+        {% if back %}
+          <span class="navLog"><a href="/" class="midLink">Back</a></span>
+        {% endif %}
+        <span class = "navLog"><a href = "/suser" class="navLink">Search</a></span>
+        <span class="navLog">{{theme}}</span>
+        <a href="javascript:void(0);" class="icon" style="color:inherit" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </nav>
+    </div>
+    <div class="search-box">
+      {%if user%}
+        {% if notinList == 'True' %}
+          <div class="mid">
+            <form method="post" action="/add">
+              <input type="hidden" name="cityAdd" value={{weather.city}}></input>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <input type = "submit" value='Add this city' name="add"></input>
+            </form>
+          </div>
+        {% elif notinList == 'False' %}
+        <div class="mid">
+          <form method="post" action="/remove">
+            <input type="hidden" name="cityRem" value={{weather.city}}></input>
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+            <input type = "submit" value='Remove this city' name="add"></input>
+          </form>
+        </div>
+        {% endif %}
+      {% else %}
+      <div class="mid"><a href="/" class="midLink"><i class="fas fa-chevron-left"></i>&nbsp&nbspBack to Home</a></div>
+      {% endif %}
+      {% if weather %}
+      <div>{{weather.city}}</div>
+      <div>{{weather.temprature}}&#176Celsius</div>
+      <div class="mid">{{weather.description}}</div>
+      <div><img src="http://openweathermap.org/img/w/{{weather.icon}}.png" height="10%" width="65%"></div>
+      {% else %}
+      <div>City not found. Please try again later.</div>
+      {% endif %}
+    </div>
+    {% if citiesTab %}
+      <div class="botDiv">
+        <nav><span class = "spanCityB">|</span>
+          {% for city in citiesTab %}
+            <a href = "/suser?search={{city}}" class="midLink"><span class="spanCity">{{city}}</span></a><span class = "spanCityB">|</span>
+          {% endfor %}
+        </nav>
+      </div>
+    {% endif %}
+  </body>
+</html>

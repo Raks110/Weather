@@ -102,6 +102,9 @@
           float: right;
           display: block;
         }
+        .navDiv span{
+          padding-top: 10px;
+        }
       }
       @media screen and (max-width: 600px) {
         .spanCity{
@@ -127,6 +130,7 @@
           text-align: left;
         }
         .navDiv.responsive{
+          z-index: 100;
           border-radius: 10px;
         }
       }
@@ -151,17 +155,17 @@
           <h1><a href="/" style="text-decoration: none;color:{{fontDiv}}">{% if user %}Hello {{user}}{% else %}Weather Web{% endif %}</a></h1>
         </span>
           {% if city %}
-            <span class="navLog"><a href = "/loc" class="navLink">{{city}}</a></span>
+            <span class="navLog" style="padding-left:3px"><a href = "/loc" class="navLink">{{city}}</a></span>
           {% elif user %}
-            <span class="navLog"><form method="post"><input type = "submit" value="Logout" name="logout"></input></form></span>
+            <span class="navLog"><form method="post" style="padding:20px 0 0 0; margin:0;"><input type = "submit" value="Logout" name="logout"></input></form></span>
           {% else %}
-            <span class="navLog"><a href = "/" class="navLink">Back</a></span>
+            <span class="navLog" style="padding-left:3px"><a href = "/" class="navLink">Back</a></span>
           {% endif %}
         {% if back %}
-          <span class="navLog"><a href="/" class="midLink">Back</a></span>
+          <span class="navLog" style="padding-left:3px"><a href="/" class="midLink">Back</a></span>
         {% endif %}
-        <span class = "navLog"><a href = "/suser" class="navLink">Search</a></span>
-        <span class="navLog">{{theme}}</span>
+        <span class = "navLog" style="padding-left:3px"><a href = "/suser" class="navLink">Search</a></span>
+        <span class="navLog" style="padding-left:3px">{{theme}}</span>
         <a href="javascript:void(0);" class="icon" style="color:inherit" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>

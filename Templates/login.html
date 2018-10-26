@@ -1,14 +1,3 @@
-<!--
-
-Placeholders:
-  1. background
-  2. fontDiv
-  3. colorDiv
-  4. theme
-  5. city
-
--->
-
 <html>
   <head>
     <title>Welcome to Weather Web</title>
@@ -127,6 +116,9 @@ Placeholders:
           float: right;
           display: block;
         }
+        .navDiv span{
+          padding-top: 10px;
+        }
       }
       @media screen and (max-width: 600px) {
         .navDiv.responsive {
@@ -143,6 +135,7 @@ Placeholders:
           text-align: left;
         }
         .navDiv.responsive{
+          z-index: 100;
           border-radius: 10px;
         }
       }
@@ -164,7 +157,7 @@ Placeholders:
     <div class="navDiv" id="topnav">
       <nav>
         <span><h1>Weather Web</h1></span>
-        <span class="navLog">{{theme}}</span>
+        <span class="navLog" style="padding-top: 20px">{{theme}}</span>
         <span class="navLog">
           {% if city %}
             <a href = "/loc" class="navLink">{{city}}</a>
